@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
+from api.writer import write_str
+
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -11,8 +13,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    with open('requests.txt','w') as f:
-        f.write('je tam \n')
+    write_str()
 
     print('Request for index page received')
     return templates.TemplateResponse('index.html', {"request": request})
